@@ -6,18 +6,17 @@ data = pd.read_csv("C:/Users/AK/Downloads/datas.csv")
 
 
 
-new_data = pd.DataFrame(data=data[" State"])
+new_data = pd.DataFrame(data=data[["Physician ID"," State"]])
 
-new2 = pd.DataFrame(data=data[["Jan 2019","Feb 2019","Mar 2019","Apr 2019", "May 2019","Jun 2019","Jul 2019", "Aug 2019","Sep 2019", "Oct 2019","Nov 2019", "Dec 2019"]])
-new2["Total"]=pd.DataFrame(data=new2.sum(axis=1))  
-totf= pd.DataFrame(data=new2["Total"])
+new2 = pd.DataFrame(data=data[["Jan-19","Feb-19","Mar-19","Apr-19", "May-19","Jun-19","Jul-19", "Aug-19","Sep-19", "Oct-19","Nov-19", "Dec-19"]])
+ 
+new_data["Total"] = new2.sum(axis=1)
 
-final = pd.concat([new_data,totf],axis=1)
-
-
-
-final2 = final.groupby(' State').sum()
+final2 = new_data.groupby(' State').sum()
 
 rank=final2.sort_values(by="Total",ascending=False)
 
-rank.plot.bar()
+rank = rank.plot(y=["Total"],kind = 'bar',title='Market Share of Different Sates',figsize=(15,5))
+rank.set_xlabel("States")
+rank.set_ylabel("MarketShare")
+
